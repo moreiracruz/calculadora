@@ -1,0 +1,36 @@
+name: Deploy to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*' # Dispara o workflow ao criar uma tag no formato "vX.X.X"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Configure Maven
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings>
+                  <servers>
+                    <server>
+                      <id>github</id>
+                      <username>${{ github.actor }}</username>
+                      <password>${{ secrets.GITHUB_TOKEN }}</password>
+                    </server>
+                  </servers>
+                </settings>" > ~/.m2/settings.xml
+
+      - name: Deploy to GitHub Packages
+        run: mvn deploy -s ~/.m2/settings.xml
