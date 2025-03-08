@@ -1,9 +1,9 @@
-name: Deploy to GitHub Packages
+name: Deploy
 
 on:
   push:
-    tags:
-      - 'v*' # Dispara o workflow ao criar uma tag no formato "vX.X.X"
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -19,18 +19,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Configure Maven
-        run: |
-          mkdir -p ~/.m2
-          echo "<settings>
-                  <servers>
-                    <server>
-                      <id>github</id>
-                      <username>${{ github.actor }}</username>
-                      <password>${{ secrets.CALCULADORA_TOKEN }}</password>
-                    </server>
-                  </servers>
-                </settings>" > ~/.m2/settings.xml
-
-      - name: Deploy to GitHub Packages
-        run: mvn deploy -s ~/.m2/settings.xml
+      - name: Deploy Artifact
+        run: mvn deploy -s .github/settings.xml
