@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.calculadora</groupId>
 	<artifactId>calculadora</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>calculadora</name>
 	<description>A anotação @FunctionalInterface é uma forma de garantir que a interface atenda aos requisitos de uma interface funcional (apenas um método abstrato)</description>
 	<url/>
@@ -68,6 +68,16 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.7.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+					<autoPublish>true</autoPublish>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
